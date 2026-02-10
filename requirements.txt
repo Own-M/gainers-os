@@ -64,9 +64,6 @@ pydeck==0.9.1
 pydyf==0.12.1
 PyGetWindow==0.0.9
 PyMsgBox==2.0.1
-pyobjc-core==12.0
-pyobjc-framework-Cocoa==12.0
-pyobjc-framework-Quartz==12.0
 pyparsing==3.3.2
 pyperclip==1.11.0
 pyphen==0.17.2
