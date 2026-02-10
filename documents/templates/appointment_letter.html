@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; padding: 40px; font-size: 14px; }
+        .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .company-name { font-size: 24px; font-weight: bold; text-transform: uppercase; }
+        .title { text-align: center; font-size: 18px; text-decoration: underline; margin-bottom: 30px; font-weight: bold; }
+        .content { line-height: 1.8; text-align: justify; }
+        .signature-area { margin-top: 60px; display: flex; justify-content: space-between; }
+        .sign-box { width: 200px; border-top: 1px solid #000; text-align: center; padding-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-name">{{ company.name }}</div>
+        <div>{{ company.address }}</div>
+    </div>
+
+    <div class="title">APPOINTMENT LETTER</div>
+
+    <p><strong>Date:</strong> {% now "F j, Y" %}</p>
+    
+    <p>To,<br>
+    <strong>{{ employee.full_name }}</strong><br>
+    Dhaka, Bangladesh</p>
+
+    <div class="content">
+        <p>Dear {{ employee.full_name }},</p>
+        
+        <p>We are pleased to appoint you as <strong>{{ employee.designation }}</strong> at <strong>{{ company.name }}</strong>. Your joining date is confirmed as <strong>{{ employee.joining_date }}</strong>.</p>
+        
+        <p>Your monthly gross salary will be BDT <strong>{{ employee.salary }}</strong>. You will be on a probation period of 3 months from the date of joining.</p>
+        
+        <p>We welcome you to our team and wish you a successful career with us.</p>
+    </div>
+
+    <br><br><br>
+
+    <table style="width: 100%;">
+        <tr>
+            <td align="left">
+                <div class="sign-box">
+                    <strong>Authorized Signature</strong><br>
+                    (Company)
+                </div>
+            </td>
+            <td align="right">
+                <div class="sign-box">
+                    <strong>{{ employee.full_name }}</strong><br>
+                    (Employee)
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; padding: 40px; color: #333; }
+        .container { border: 2px solid #333; padding: 20px; }
+        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+        .company-name { font-size: 24px; font-weight: bold; text-transform: uppercase; }
+        .title { text-align: center; font-size: 16px; font-weight: bold; text-decoration: underline; margin-bottom: 20px; }
+        
+        .info-table { width: 100%; margin-bottom: 20px; }
+        .info-table td { padding: 5px; }
+        
+        .salary-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .salary-table th, .salary-table td { border: 1px solid #999; padding: 8px; }
+        .salary-table th { background-color: #eee; text-align: left; }
+        .amount { text-align: right; }
+        
+        .footer { margin-top: 50px; }
+        .sign { border-top: 1px solid #333; width: 150px; text-align: center; float: right; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="company-name">{{ company.name }}</div>
+            <div>{{ company.address }}</div>
+        </div>
+
+        <div class="title">PAYSLIP FOR {{ month|upper }}</div>
+
+        <table class="info-table">
+            <tr>
+                <td><strong>Employee ID:</strong> {{ employee.id|stringformat:"04d" }}</td>
+                <td><strong>Designation:</strong> {{ employee.designation }}</td>
+            </tr>
+            <tr>
+                <td><strong>Name:</strong> {{ employee.full_name }}</td>
+                <td><strong>Joining Date:</strong> {{ employee.joining_date }}</td>
+            </tr>
+        </table>
+
+        <table class="salary-table">
+            <thead>
+                <tr>
+                    <th>Earnings</th>
+                    <th class="amount">Amount (BDT)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Basic Salary</td>
+                    <td class="amount">{{ breakdown.basic }}</td>
+                </tr>
+                <tr>
+                    <td>House Rent Allowance (30%)</td>
+                    <td class="amount">{{ breakdown.house_rent }}</td>
+                </tr>
+                <tr>
+                    <td>Medical Allowance (10%)</td>
+                    <td class="amount">{{ breakdown.medical }}</td>
+                </tr>
+                <!-- বোনাস বা ওভারটাইম থাকলে এখানে লজিক বসানো যাবে -->
+                <tr style="font-weight: bold; background-color: #f9f9f9;">
+                    <td>Total Gross Salary</td>
+                    <td class="amount">{{ breakdown.gross }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="font-size: 12px;"><strong>Net Payable:</strong> BDT {{ breakdown.gross }} (Paid via Bank Transfer/Cash)</p>
+
+        <div class="footer">
+            <div class="sign">Authorized Signature</div>
+        </div>
+    </div>
+</body>
+</html>

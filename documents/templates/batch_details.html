@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Batch Details | GainersOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: sans-serif; background-color: #f8fafc; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .sticky-col { position: sticky; left: 0; background: white; z-index: 20; border-right: 1px solid #e2e8f0; box-shadow: 4px 0 6px -4px rgba(0,0,0,0.1); }
+        .task-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #10b981; }
+        th { font-size: 10px; padding: 10px; background: #f1f5f9; white-space: nowrap; }
+        td { padding: 10px; text-align: center; border-bottom: 1px solid #f1f5f9; }
+    </style>
+</head>
+<body class="p-6">
+    
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800">{{ batch.name }}</h1>
+            <p class="text-sm text-slate-500">Coordinator: {{ batch.coordinator.full_name }}</p>
+        </div>
+        <a href="/" class="bg-white border px-4 py-2 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50">Back to Dashboard</a>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="table-container overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr>
+                        <th class="sticky-col text-left pl-4">Student</th>
+                        <th>Docs Rcvd</th><th>Research</th><th>Uni List</th><th>Govt Schol</th>
+                        <th>Prof List</th><th>CV</th><th>Email Draft</th><th>Email Sent</th>
+                        <th>SOP Written</th><th>SOP Initial</th><th>SOP Final</th><th>Prog SOP</th>
+                        <th>LOR</th><th>Proposal</th><th>Portal Done</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="sticky-col text-left pl-4 py-3">
+                            <p class="font-bold text-sm text-slate-800">{{ client.name }}</p>
+                            <div class="flex gap-2 mt-1">
+                                <a href="https://wa.me/{{ client.phone }}" target="_blank" class="text-green-500"><i class="fab fa-whatsapp"></i></a>
+                                <span class="text-xs text-slate-400">{{ client.get_progress }}%</span>
+                            </div>
+                        </td>
+                        <!-- Tasks -->
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_docs_received', this)" {% if client.task_docs_received %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_research', this)" {% if client.task_research %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_uni_list', this)" {% if client.task_uni_list %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_govt_scholarship', this)" {% if client.task_govt_scholarship %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_prof_list', this)" {% if client.task_prof_list %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_cv', this)" {% if client.task_cv %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_email_draft', this)" {% if client.task_email_draft %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_email_sent', this)" {% if client.task_email_sent %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_sop_written', this)" {% if client.task_sop_written %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_sop_initial', this)" {% if client.task_sop_initial %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_sop_final', this)" {% if client.task_sop_final %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_sop_program', this)" {% if client.task_sop_program %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_lor', this)" {% if client.task_lor %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_research_proposal', this)" {% if client.task_research_proposal %}checked{% endif %}></td>
+                        <td><input type="checkbox" class="task-checkbox" onchange="updateTask({{ client.id }}, 'task_portal_complete', this)" {% if client.task_portal_complete %}checked{% endif %}></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="16" class="p-8 text-center text-slate-400">No students found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-4 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 z-50">
+        <i class="fas fa-check-circle text-emerald-400"></i>
+        <span class="text-sm font-medium">Updated Successfully</span>
+    </div>
+
+    <script>
+        function updateTask(clientId, taskName, checkbox) {
+            const formData = new FormData();
+            formData.append('client_id', clientId);
+            formData.append('task_name', taskName);
+            formData.append('is_checked', checkbox.checked);
+            
+            fetch("{% url 'update_client_task' %}", {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    // Show Toast
+                    const toast = document.getElementById('toast');
+                    toast.classList.remove('translate-y-20', 'opacity-0');
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-20', 'opacity-0');
+                    }, 2000);
+                } else {
+                    alert("Update failed!");
+                    checkbox.checked = !checkbox.checked;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                checkbox.checked = !checkbox.checked;
+            });
+        }
+    </script>
+</body>
+</html>

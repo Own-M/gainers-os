@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Landscape Mode */
+        @page { size: A4 landscape; margin: 10mm; }
+        body { font-family: sans-serif; font-size: 10px; }
+        .header { text-align: center; margin-bottom: 15px; }
+        .company-name { font-size: 18px; font-weight: bold; text-transform: uppercase; }
+        .sheet-title { text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 14px; text-decoration: underline; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #000; padding: 2px; text-align: center; }
+        th { background-color: #f0f0f0; font-size: 9px; }
+        .name-col { text-align: left; width: 150px; padding-left: 5px; }
+        .day-col { width: 18px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-name">{{ company.name }}</div>
+        <div>Attendance Register</div>
+    </div>
+
+    <div class="sheet-title">Month: {{ month|upper }}</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 30px;">SL</th>
+                <th class="name-col">Employee Name</th>
+                <!-- Loop for days 1 to Total Days -->
+                {% for day in days_range %}
+                    <th class="day-col">{{ day }}</th>
+                {% endfor %}
+                <th style="width: 40px;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td class="name-col">{{ emp.full_name }}</td>
+                <!-- Empty cells for manual marking -->
+                {% for day in days_range %}
+                    <td></td>
+                {% endfor %}
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px; font-size: 9px;">
+        <p><strong>Note:</strong> P = Present, A = Absent, L = Late, H = Holiday</p>
+    </div>
+    
+    <div style="margin-top: 40px;">
+        <div style="float:left; border-top:1px solid black; width:150px; text-align:center;">HR Manager</div>
+        <div style="float:right; border-top:1px solid black; width:150px; text-align:center;">Approved By</div>
+    </div>
+</body>
+</html>

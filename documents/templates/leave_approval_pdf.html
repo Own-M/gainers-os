@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            padding: 40px;
+            color: #000;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .company-name {
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1a202c;
+        }
+        .address {
+            font-size: 12px;
+            color: #555;
+        }
+        .title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        .content {
+            margin-bottom: 40px;
+        }
+        .details-box {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .details-box td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .label {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            width: 30%;
+        }
+        .footer {
+            margin-top: 60px;
+            width: 100%;
+        }
+        .signature {
+            float: right;
+            width: 200px;
+            border-top: 1px solid #000;
+            text-align: center;
+            padding-top: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-name">{{ company.name }}</div>
+        <div class="address">{{ company.address }}</div>
+    </div>
+
+    <div class="title">LEAVE APPROVAL LETTER</div>
+
+    <p><strong>Date:</strong> {% now "F j, Y" %}</p>
+
+    <div style="margin-bottom: 20px;">
+        To,<br>
+        <strong>{{ leave.employee.full_name }}</strong><br>
+        {{ leave.employee.designation }}<br>
+        ID: {{ leave.employee.id|stringformat:"04d" }}
+    </div>
+
+    <div class="content">
+        <p>Dear {{ leave.employee.full_name }},</p>
+        <p>We are pleased to inform you that your leave application has been <strong>APPROVED</strong> by the management.</p>
+
+        <table class="details-box">
+            <tr>
+                <td class="label">Leave Type</td>
+                <td>{{ leave.leave_type }} Leave</td>
+            </tr>
+            <tr>
+                <td class="label">Duration</td>
+                <td>From <strong>{{ leave.start_date }}</strong> to <strong>{{ leave.end_date }}</strong></td>
+            </tr>
+            <tr>
+                <td class="label">Total Days</td>
+                <td>{{ days }} Day(s)</td>
+            </tr>
+            <tr>
+                <td class="label">Reason</td>
+                <td>{{ leave.reason }}</td>
+            </tr>
+        </table>
+
+        <p>Please ensure that your assigned tasks are properly handed over before your leave commences. We wish you a pleasant time off.</p>
+    </div>
+
+    <div class="footer">
+        <div class="signature">
+            Authorized Signature<br>
+            HR Department
+        </div>
+    </div>
+</body>
+</html>

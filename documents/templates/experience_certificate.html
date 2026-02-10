@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Times New Roman', serif; padding: 50px; font-size: 14px; line-height: 1.6; }
+        .header { text-align: center; margin-bottom: 50px; border-bottom: 2px solid #000; padding-bottom: 20px; }
+        .company-name { font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        .title { text-align: center; font-size: 20px; font-weight: bold; text-decoration: underline; margin-bottom: 40px; text-transform: uppercase; }
+        .content { margin-bottom: 60px; text-align: justify; }
+        .footer { margin-top: 80px; }
+        .signature { border-top: 1px solid #000; width: 200px; text-align: center; padding-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-name">{{ company.name }}</div>
+        <div>{{ company.address }}</div>
+    </div>
+
+    <div class="title">TO WHOM IT MAY CONCERN</div>
+
+    <div class="content">
+        <p>This is to certify that <strong>{{ employee.full_name }}</strong> has been working with <strong>{{ company.name }}</strong> as a <strong>{{ employee.designation }}</strong> since <strong>{{ employee.joining_date }}</strong>.</p>
+
+        <p>During their tenure with us, we found them to be sincere, hardworking, and dedicated to their duties. They have demonstrated excellent professional skills and character.</p>
+
+        <p>We wish them every success in their future endeavors.</p>
+    </div>
+
+    <p><strong>Date:</strong> {{ today }}</p>
+
+    <div class="footer">
+        <div class="signature">
+            Managing Director<br>
+            {{ company.name }}
+        </div>
+    </div>
+</body>
+</html>

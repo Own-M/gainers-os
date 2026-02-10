@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; padding: 30px; font-size: 12px; color: #333; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .company-name { font-size: 24px; font-weight: bold; text-transform: uppercase; color: #4f46e5; }
+        .title { text-align: center; font-size: 16px; font-weight: bold; background: #eee; padding: 5px; margin-bottom: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        .amount { text-align: right; font-weight: bold; }
+        .total-row { background-color: #f0fdf4; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-name">{{ company.name }}</div>
+        <div>{{ company.address }}</div>
+    </div>
+
+    <div class="title">PAYSLIP FOR {{ month|upper }}</div>
+
+    <!-- Employee Info -->
+    <table style="border: none;">
+        <tr>
+            <td style="border: none; width: 50%;"><strong>Name:</strong> {{ employee.full_name }}</td>
+            <td style="border: none;"><strong>Designation:</strong> {{ employee.designation }}</td>
+        </tr>
+        <tr>
+            <td style="border: none;"><strong>ID:</strong> {{ employee.id|stringformat:"04d" }}</td>
+            <td style="border: none;"><strong>Attendance:</strong> Present: {{ stats.present }}, Late: {{ stats.late }}</td>
+        </tr>
+    </table>
+
+    <!-- Salary Calculation -->
+    <table>
+        <tr style="background-color: #eee;">
+            <th>Description</th>
+            <th width="150">Amount (BDT)</th>
+        </tr>
+        <tr>
+            <td>Basic Hourly Pay (Based on Attendance)</td>
+            <td class="amount">{{ financials.base }}</td>
+        </tr>
+        <tr>
+            <td>Transport Allowance</td>
+            <td class="amount">{{ financials.transport }}</td>
+        </tr>
+        <tr>
+            <td>Food Allowance</td>
+            <td class="amount">{{ financials.food }}</td>
+        </tr>
+        <tr>
+            <td>Sales Commission (Total Sales: {{ stats.sales }})</td>
+            <td class="amount">{{ financials.commission }}</td>
+        </tr>
+        {% if financials.bonus > 0 %}
+        <tr>
+            <td>Performance Bonus (Best Seller)</td>
+            <td class="amount">{{ financials.bonus }}</td>
+        </tr>
+        {% endif %}
+        <tr class="total-row">
+            <td style="text-align: right;">NET PAYABLE</td>
+            <td class="amount">{{ financials.gross }}</td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 50px;">
+        <div style="float: left; width: 30%; border-top: 1px solid black; text-align: center;">Employee Signature</div>
+        <div style="float: right; width: 30%; border-top: 1px solid black; text-align: center;">Authorized Signature</div>
+    </div>
+</body>
+</html>
