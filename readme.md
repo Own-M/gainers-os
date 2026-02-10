@@ -10,4 +10,4 @@ Admin Pane
 http://127.0.0.1:8000/admin/
 
 
-crm-bot@gainers-crm.iam.gserviceaccount.com
+crm-bot@gainers-crm.iam.gserviceaccount.com# gainers-os
